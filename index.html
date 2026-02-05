@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>College Result System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            background: white;
+            padding: 40px;
+            width: 400px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>College Result System</h2>
+    <input type="text" id="roll" placeholder="Enter Roll Number">
+    <button onclick="getResult()">Get Result</button>
+    <div id="result"></div>
+</div>
+
+<script>
+function getResult() {
+    let roll = document.getElementById("roll").value;
+
+    fetch("/get_result?roll=" + roll)
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            document.getElementById("result").innerText = data.error;
+        } else {
+            document.getElementById("result").innerText =
+                "Name: " + data.name + " | Marks: " + data.marks;
+        }
+    });
+}
+</script>
+
+</body>
+</html>
